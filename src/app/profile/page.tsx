@@ -13,7 +13,10 @@ export default function Test() {
         console.log("Full Session Object:", JSON.stringify(session, null, 2));
 
         const token = session.accessToken;
-        const username = session.user.name;
+        let username;
+        if (session.user) {
+          username = session.user.name;
+        }
 
         if (!token) {
           console.error("No access token available");
