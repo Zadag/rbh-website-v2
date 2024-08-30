@@ -2,14 +2,21 @@
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import axios from "axios";
+import configProd from "../../../config.prod.json";
+import configLocal from "../../../config.local.json";
+const config =
+  process.env.NEXT_PUBLIC_ENVIRONMENT === "local" ? configLocal : configProd;
 
-export default function Test() {
+export default function Profile() {
   const [profileInfo, setProfileInfo] = useState<string | null>(null);
   const { data: session, status } = useSession();
 
+  const apiUrl = config!.EXPRESS_URL;
+  console.log(apiUrl);
+
   useEffect(() => {
     const fetchData = async () => {
-      if (status === "authenticated" && session) {
+      if (status === "authenticated" && session.accessToken) {
         console.log("Full Session Object:", JSON.stringify(session, null, 2));
 
         const token = session.accessToken;
@@ -18,15 +25,9 @@ export default function Test() {
           username = session.user.name;
         }
 
-        if (!token) {
-          console.error("No access token available");
-          setProfileInfo("Error: No access token available");
-          return;
-        }
-
         try {
           const response = await axios.post(
-            "http://localhost:3001/profile",
+            `${apiUrl}/profile`,
             { accessToken: token, username },
             {
               headers: {

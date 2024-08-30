@@ -10,18 +10,15 @@ const handler = NextAuth({
     }),
   ],
   callbacks: {
-    async jwt({ token, account, user }) {
-      if (account && user) {
-        return {
-          ...token,
-          accessToken: account.access_token,
-          refreshToken: account.refresh_token,
-          username: account.providerAccountId,
-        };
+    async jwt({ token, account }) {
+      if (account) {
+        token.accessToken = account.access_token;
+        token.refreshToken = account.refresh_token;
+        token.username = account.providerAccountId;
       }
       return token;
     },
-    async session({ session, token, user }) {
+    async session({ session, token }) {
       session.accessToken = token.accessToken as string | undefined;
       session.refreshToken = token.refreshToken as string | undefined;
       session.username = token.username as string | undefined;

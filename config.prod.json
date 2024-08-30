@@ -1,0 +1,4 @@
+{
+  "EXPRESS_URL": "http://localhost:3001",
+  "NEXTAUTH_URL": "https://rbh-website-v2.vercel.app"
+}
