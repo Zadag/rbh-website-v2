@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 const navigation = [
-  { name: "Inhouses", href: "#", current: false },
+  { name: "Inhouses", href: "inhouses", current: false },
   { name: "Tournaments", href: "#", current: false },
   { name: "FAQ", href: "#", current: false },
   {
@@ -70,13 +70,13 @@ export default function NavMenu() {
                 {navigation.map((item) => (
                   <a
                     key={item.name}
-                    href={item.href}
+                    onClick={() => router.push(item.href)}
                     aria-current={item.current ? "page" : undefined}
                     className={classNames(
                       item.current
-                        ? "bg-gray-900 text-white"
+                        ? "bg-gray-900 text-white cursor-pointer"
                         : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                      "rounded-md px-3 py-2 text-sm font-medium"
+                      "rounded-md px-3 py-2 text-sm font-medium cursor-pointer"
                     )}
                   >
                     {item.name}
