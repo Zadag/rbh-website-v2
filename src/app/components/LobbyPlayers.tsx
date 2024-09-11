@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-//import { X } from "lucide-react";
 import { LobbyType } from "../../types/Lobby";
 
 type LobbyPlayerProps = {
@@ -40,7 +39,7 @@ const LobbyPlayers = ({ lobbyInfo, onDropSelected }: LobbyPlayerProps) => {
                   : "bg-amber-200 text-amber-800 hover:bg-amber-300"
               }`}
             >
-              {/* <X size={12} /> */}X
+              X
             </button>
           </li>
         ))}
