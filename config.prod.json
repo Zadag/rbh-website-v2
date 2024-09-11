@@ -1,4 +1,4 @@
 {
-  "EXPRESS_URL": "http://212.192.29.29:3001",
+  "EXPRESS_URL": "http://212.192.29.29:25702",
   "NEXTAUTH_URL": "https://rbh-website-v2.vercel.app"
 }
