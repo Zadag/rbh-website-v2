@@ -19,9 +19,10 @@ const handler = NextAuth({
       return token;
     },
     async session({ session, token }) {
+      console.log("TOKEN", token);
       session.accessToken = token.accessToken as string | undefined;
       session.refreshToken = token.refreshToken as string | undefined;
-      session.username = token.username as string | undefined;
+      session.userId = token.sub as string | number | undefined;
       return session;
     },
   },
