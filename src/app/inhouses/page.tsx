@@ -46,7 +46,7 @@ export default function Inhouses() {
       if (session.user) {
         username = session.user.name!;
         setUsername(username);
-        router.push("/");
+        router.push("/inhouses");
       }
     }
   }, [session, status]);
