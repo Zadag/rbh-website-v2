@@ -12,7 +12,7 @@ const config =
 const apiUrl = config.EXPRESS_URL;
 
 export default function Inhouses() {
-  const { data: session, status, update } = useSession();
+  const { data: session, status } = useSession();
   const [token, setToken] = useState<string | null>(null);
   const [lobbyInfo, setLobbyInfo] = useState<LobbyType[] | null>(null);
   const [username, setUsername] = useState<string | null>(null);
@@ -41,13 +41,12 @@ export default function Inhouses() {
       const token = session.accessToken;
       setToken(token);
       let username;
-      if (session.user?.name && session.user.name !== username) {
-        username = session.user.name;
+      if (session.user) {
+        username = session.user.name!;
         setUsername(username);
-        update();
       }
     }
-  }, [session, status, username]);
+  }, [session, status]);
 
   useEffect(() => {
     const eventSource = new EventSource(`${apiUrl}/lobbyEvent`);
