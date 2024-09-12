@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { getServerSession } from "next-auth";
 import SessionProvider from "./components/SessionProvider";
+import { SessionWrapper } from "./components/SessionWrapper";
 import NavMenu from "./components/NavMenu";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -25,7 +26,7 @@ export default async function RootLayout({
         <main className="flex flex-col min-h-screen">
           <SessionProvider session={session}>
             <NavMenu />
-            {children}
+            <SessionWrapper>{children}</SessionWrapper>
           </SessionProvider>
         </main>
       </body>

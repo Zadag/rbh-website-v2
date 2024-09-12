@@ -12,7 +12,7 @@ const config =
 const apiUrl = config.EXPRESS_URL;
 
 export default function Inhouses() {
-  const { data: session, status } = useSession({ required: true });
+  const { data: session, status } = useSession();
   const [token, setToken] = useState<string | null>(null);
   const [lobbyInfo, setLobbyInfo] = useState<LobbyType[] | null>(null);
   const [username, setUsername] = useState<string | null>(null);
