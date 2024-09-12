@@ -2,7 +2,7 @@
 import { LobbyType } from "@/types/Lobby";
 import Lobby from "../components/Lobby";
 import axios from "axios";
-import { useSession } from "next-auth/react";
+import { useSession, getSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import configProd from "../../../config.prod.json";
 import configLocal from "../../../config.local.json";
@@ -16,6 +16,7 @@ export default function Inhouses() {
   const [token, setToken] = useState<string | null>(null);
   const [lobbyInfo, setLobbyInfo] = useState<LobbyType[] | null>(null);
   const [username, setUsername] = useState<string | null>(null);
+  getSession();
 
   const hostLobby = async () => {
     try {
