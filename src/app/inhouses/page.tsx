@@ -44,6 +44,7 @@ export default function Inhouses() {
       if (session.user?.name && session.user.name !== username) {
         username = session.user.name;
         setUsername(username);
+        update();
       }
     }
   }, [session, status, username]);
