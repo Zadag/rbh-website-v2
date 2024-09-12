@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import configProd from "../../../config.prod.json";
 import configLocal from "../../../config.local.json";
+import { useRouter } from "next/navigation";
 
 const config =
   process.env.NEXT_PUBLIC_ENVIRONMENT === "local" ? configLocal : configProd;
@@ -16,6 +17,7 @@ export default function Inhouses() {
   const [token, setToken] = useState<string | null>(null);
   const [lobbyInfo, setLobbyInfo] = useState<LobbyType[] | null>(null);
   const [username, setUsername] = useState<string | null>(null);
+  const router = useRouter();
 
   const hostLobby = async () => {
     try {
@@ -44,9 +46,12 @@ export default function Inhouses() {
       if (session.user) {
         username = session.user.name!;
         setUsername(username);
+        router.push("/");
       }
     }
+  }, [session, status]);
 
+  useEffect(() => {
     const eventSource = new EventSource(`${apiUrl}/lobbyEvent`);
 
     eventSource.onmessage = (event) => {
@@ -65,11 +70,10 @@ export default function Inhouses() {
       eventSource.close();
     };
 
-    // Clean up the SSE connection when the component unmounts
     return () => {
       eventSource.close();
     };
-  }, [session, status]);
+  }, []);
 
   return (
     <>
