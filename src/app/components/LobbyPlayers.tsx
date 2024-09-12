@@ -25,9 +25,9 @@ const LobbyPlayers = ({ lobbyInfo, onDropSelected }: LobbyPlayerProps) => {
   return (
     <div className="space-y-2">
       <ul className="space-y-1 mb-3 max-h-36 overflow-y-auto">
-        {lobbyInfo.Users.map((user) => (
+        {lobbyInfo.Users.map((user, index) => (
           <li
-            key={user.user_id}
+            key={`${index}-${user.user_id}`}
             className="bg-amber-100 px-2 py-1 rounded text-xs text-amber-800 flex justify-between items-center"
           >
             <span>{user.summoner_name}</span>
