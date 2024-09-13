@@ -27,7 +27,9 @@ export default async function RootLayout({
           <SessionProvider>
             <SessionWrapper>
               <NavMenu />
-              {children}
+              <div className="flex  min-h-full flex-1 flex-col pt-12 px-6 py-12 lg:px-8 bg-gradient-to-t from-red-950 to-black">
+                {children}
+              </div>
             </SessionWrapper>
           </SessionProvider>
         </main>

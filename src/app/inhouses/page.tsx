@@ -74,32 +74,30 @@ export default function Inhouses() {
 
   return (
     <>
-      <div className="flex  min-h-full flex-1 flex-col pt-12 px-6 py-12 lg:px-8 bg-gradient-to-t from-red-950 to-black">
-        <div className="flex-col justify-center mx-auto">
-          {username ? (
-            <button
-              className="bg-green-600 hover:bg-green-700 text-amber-100 font-bold py-1 px-3 rounded text-sm transition duration-300 shadow-md hover:shadow-lg"
-              onClick={hostLobby}
-            >
-              Host
-            </button>
-          ) : null}
-          <div className="flex flex-row flex-wrap gap-10">
-            {lobbyInfo ? (
-              lobbyInfo.map((lobby, index) => {
-                return (
-                  <Lobby
-                    key={lobby.lobby_id}
-                    lobby={lobbyInfo[index]}
-                    token={token}
-                    username={username}
-                  />
-                );
-              })
-            ) : (
-              <p>Loading...</p>
-            )}
-          </div>
+      <div className="flex-col justify-center mx-auto">
+        {username ? (
+          <button
+            className="bg-green-600 hover:bg-green-700 text-amber-100 font-bold py-1 px-3 rounded text-sm transition duration-300 shadow-md hover:shadow-lg"
+            onClick={hostLobby}
+          >
+            Host
+          </button>
+        ) : null}
+        <div className="flex flex-row flex-wrap gap-10">
+          {lobbyInfo ? (
+            lobbyInfo.map((lobby, index) => {
+              return (
+                <Lobby
+                  key={lobby.lobby_id}
+                  lobby={lobbyInfo[index]}
+                  token={token}
+                  username={username}
+                />
+              );
+            })
+          ) : (
+            <p>Loading...</p>
+          )}
         </div>
       </div>
     </>
