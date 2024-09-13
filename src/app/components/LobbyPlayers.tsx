@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { LobbyType } from "../../types/Lobby";
 
 type LobbyPlayerProps = {
@@ -21,6 +21,8 @@ const LobbyPlayers = ({ lobbyInfo, onDropSelected }: LobbyPlayerProps) => {
     onDropSelected(lobbyInfo.lobby_id, selectedUsers);
     setSelectedUsers([]);
   };
+
+  console.log(lobbyInfo.Users);
 
   return (
     <div className="space-y-2">

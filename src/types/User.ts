@@ -15,12 +15,12 @@ export type UserInLobby = {
   region_id: string;
   primary_role: string;
   secondary_role: string;
-  created_at: Date;
-  updated_at: Date;
+  created_at: string;
+  updated_at: string;
   created_by: string | null;
   LobbyUsers: {
-    created_at: Date | string;
-    updated_at: Date | string;
+    created_at: string;
+    updated_at: string;
     UserUserId: string;
     LobbyLobbyId: number;
   };

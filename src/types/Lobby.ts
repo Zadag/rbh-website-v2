@@ -14,8 +14,8 @@ export type LobbyType = {
   thread_id: string | number | null; //verify string or number
   game_mode_id: number;
   region_id: string;
-  created_at: Date;
-  updated_at: Date;
+  created_at: string;
+  updated_at: string;
   Users: UserInLobby[];
   Game: {
     game_id: 1;
@@ -23,7 +23,7 @@ export type LobbyType = {
     icon_url: null;
     emote: null;
     enabled: boolean;
-    created_at: Date | string;
-    updated_at: Date | string;
+    created_at: string;
+    updated_at: string;
   };
 };
