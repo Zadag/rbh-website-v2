@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 import SessionProvider from "./components/SessionProvider";
 import { SessionWrapper } from "./components/SessionWrapper";
 import NavMenu from "./components/NavMenu";
+import { UserProvider } from "./hooks/UserContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,10 +27,12 @@ export default async function RootLayout({
         <main className="flex flex-col min-h-screen">
           <SessionProvider>
             <SessionWrapper>
-              <NavMenu />
-              <div className="flex  min-h-full flex-1 flex-col pt-12 px-6 py-12 lg:px-8 bg-gradient-to-t from-red-950 to-black">
-                {children}
-              </div>
+              <UserProvider>
+                <NavMenu />
+                <div className="flex  min-h-full flex-1 flex-col pt-12 px-6 py-12 lg:px-8 bg-gradient-to-t from-red-950 to-black">
+                  {children}
+                </div>
+              </UserProvider>
             </SessionWrapper>
           </SessionProvider>
         </main>

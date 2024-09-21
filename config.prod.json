@@ -1,4 +1,8 @@
 {
   "EXPRESS_URL": "http://212.192.29.29:25702",
-  "NEXTAUTH_URL": "https://rbh-website-v2.vercel.app"
+  "NEXTAUTH_URL": "https://rbh-website-v2.vercel.app",
+  "ref_roles": {
+    "⚔️Queen's Croquet Referee⚔️": "585967816709242901",
+    "🍼Referee Trainee🍼": "636701654678241290"
+  }
 }

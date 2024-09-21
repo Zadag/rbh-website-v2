@@ -1,4 +1,8 @@
 {
   "EXPRESS_URL": "http://localhost:3001",
-  "NEXTAUTH_URL": "http://localhost:3000"
+  "NEXTAUTH_URL": "http://localhost:3000",
+  "ref_roles": {
+    "⚔️Queen's Croquet Referee⚔️": "772727589730385926",
+    "🍼Referee Trainee🍼": "772727589730385923"
+  }
 }

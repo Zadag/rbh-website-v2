@@ -1,52 +1,21 @@
 import React from "react";
-
-interface User {
-  user_id: string;
-  summoner_name: string;
-  tag_line: string;
-  verified: boolean;
-  puuid: string;
-  server_experience: number;
-  server_level: number;
-  server_money: number;
-  join_date: string;
-  last_daily_date: string | null;
-  vote_streak: number;
-  last_vote_date: string | null;
-  last_message_date: string | null;
-  region_id: string;
-  primary_role: string;
-  secondary_role: string;
-  created_at: string;
-  updated_at: string;
-  created_by: string | null;
-}
-
-interface RolesAndPerms {
-  roles: Record<string, string>;
-  permissions: Record<string, string>;
-}
-
-interface ProfileInfo {
-  user: User;
-  rolesAndPerms: RolesAndPerms;
-  eloRating: any;
-}
+import { UserAndRoles } from "@/types/User";
 
 interface ProfileInfoCardProps {
-  profileInfo: ProfileInfo;
+  userProps: UserAndRoles;
 }
 
 interface InfoItemProps {
   icon: string;
   label: string;
-  value: string | number;
+  value: string | number | null;
 }
 
-const ProfileInfoCard: React.FC<ProfileInfoCardProps> = ({ profileInfo }) => {
-  const { user, rolesAndPerms } = profileInfo;
+const ProfileInfoCard: React.FC<ProfileInfoCardProps> = ({ userProps }) => {
+  const { user, roles, permissions } = userProps;
 
-  const formatDate = (dateString: string): string => {
+  const formatDate = (dateString: string | null): string => {
+    if (!dateString) return "Unavailable"
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
       year: "numeric",
@@ -54,8 +23,6 @@ const ProfileInfoCard: React.FC<ProfileInfoCardProps> = ({ profileInfo }) => {
       day: "numeric",
     });
   };
-
-  console.log(user, rolesAndPerms);
 
   return (
     <div className="max-w-2xl mx-auto bg-gray-800 shadow-lg rounded-lg overflow-hidden border border-red-300">
@@ -91,7 +58,7 @@ const ProfileInfoCard: React.FC<ProfileInfoCardProps> = ({ profileInfo }) => {
           <InfoItem
             icon="🎮"
             label="Server Level"
-            value={user.server_level.toString()}
+            value={user.server_level ? user.server_level.toString() : ""}
           />
           <InfoItem icon="📍" label="Region" value={user.region_id} />
           <InfoItem icon="⚔️" label="Primary Role" value={user.primary_role} />
@@ -105,14 +72,14 @@ const ProfileInfoCard: React.FC<ProfileInfoCardProps> = ({ profileInfo }) => {
         <div className="mt-6">
           <h3 className="text-lg font-semibold mb-2 text-red-300">Roles</h3>
           <div className="flex flex-wrap gap-2">
-            {Object.entries(rolesAndPerms.roles).map(([role, id]) => (
+            {roles ? Object.entries(roles).map(([role, id]) => (
               <span
                 key={id}
                 className="bg-red-900 text-white px-2 py-1 rounded-full text-sm"
               >
                 {role}
               </span>
-            ))}
+            )) : "uh oh"}
           </div>
         </div>
       </div>
