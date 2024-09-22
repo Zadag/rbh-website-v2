@@ -11,7 +11,6 @@ const canHost = (roles: Roles) => {
     const refRoles = config.ref_roles;
 
     for (const role in roles) {
-        console.log(role, roles[role])
         for (const refRole in refRoles) {
             if (roles[role] === refRoles[refRole as keyof typeof refRoles]) return true
         }

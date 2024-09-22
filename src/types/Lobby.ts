@@ -7,6 +7,7 @@ export type LobbyType = {
   lobby_name: string;
   closed_date: string | null;
   host_id: string;
+  host_name?: string;
   draft_id: string | number | null; // verify string or number
   match_id: string | number | null; //verify string or number
   game_id: number;

@@ -48,7 +48,6 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     username: string
   ) => {
     try {
-      console.log(username);
       const response = await axios.post(
         `${apiUrl}/profile`,
         { accessToken, username },

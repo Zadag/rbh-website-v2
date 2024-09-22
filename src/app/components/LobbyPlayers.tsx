@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { LobbyType } from "../../types/Lobby";
+import { useUser } from "../hooks/UserContext";
+import canHost from "../utils/canHost";
 
 type LobbyPlayerProps = {
   lobbyInfo: LobbyType;
@@ -8,6 +10,14 @@ type LobbyPlayerProps = {
 
 const LobbyPlayers = ({ lobbyInfo, onDropSelected }: LobbyPlayerProps) => {
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
+
+  const userCtx = useUser();
+  if (userCtx === undefined) {
+    throw new Error("User Context can only be used in a User Provider tree");
+  }
+  const { user, loading, session } = userCtx;
+
+  const canDropUsers = canHost(user?.roles ?? {});
 
   const toggleUserSelection = (userId: string) => {
     setSelectedUsers((prev) =>
@@ -22,8 +32,6 @@ const LobbyPlayers = ({ lobbyInfo, onDropSelected }: LobbyPlayerProps) => {
     setSelectedUsers([]);
   };
 
-  console.log(lobbyInfo.Users);
-
   return (
     <div className="space-y-2">
       <ul className="space-y-1 mb-3 max-h-36 overflow-y-auto">
@@ -33,16 +41,15 @@ const LobbyPlayers = ({ lobbyInfo, onDropSelected }: LobbyPlayerProps) => {
             className="bg-amber-100 px-2 py-1 rounded text-xs text-amber-800 flex justify-between items-center"
           >
             <span>{user.summoner_name}</span>
-            <button
+            {canDropUsers && <button
               onClick={() => toggleUserSelection(user.user_id)}
-              className={`p-1 mr-2 rounded-full transition-colors ${
-                selectedUsers.includes(user.user_id)
-                  ? "bg-amber-500 text-white"
-                  : "bg-amber-200 text-amber-800 hover:bg-amber-300"
-              }`}
+              className={`p-1 mr-2 rounded-full transition-colors ${selectedUsers.includes(user.user_id)
+                ? "bg-amber-500 text-white"
+                : "bg-amber-200 text-amber-800 hover:bg-amber-300"
+                }`}
             >
               X
-            </button>
+            </button>}
           </li>
         ))}
       </ul>

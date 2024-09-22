@@ -4,6 +4,7 @@ import LobbyPlayers from "./LobbyPlayers";
 
 import configProd from "../../../config.prod.json";
 import configLocal from "../../../config.local.json";
+import { useUser } from "../hooks/UserContext";
 const config =
   process.env.NEXT_PUBLIC_ENVIRONMENT === "local" ? configLocal : configProd;
 
@@ -11,19 +12,24 @@ const apiUrl = config.EXPRESS_URL;
 
 type LobbyProps = {
   lobby: LobbyType | null;
-  token: string | null;
-  username: string | null;
 };
 
-export default function Lobby({ lobby, token, username }: LobbyProps) {
+export default function Lobby({ lobby }: LobbyProps) {
+  const userCtx = useUser();
+  if (userCtx === undefined) {
+    throw new Error("User Context can only be used in a User Provider tree");
+  }
+  const { user, loading, session } = userCtx;
+
   const joinLobby = async (lobbyId: number, username: string | null) => {
+
     try {
       const response = await axios.post(
         `${apiUrl}/join`,
-        { accessToken: token, game: "League of Legends", lobbyId, username },
+        { accessToken: session?.accessToken, game: "League of Legends", lobbyId, username: session?.user?.name },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${session?.accessToken}`,
           },
         }
       );
@@ -39,15 +45,15 @@ export default function Lobby({ lobby, token, username }: LobbyProps) {
       const response = await axios.post(
         `${apiUrl}/drop`,
         {
-          accessToken: token,
+          accessToken: session?.accessToken,
           game: "League of Legends",
-          username,
+          username: session?.user?.name,
           user_ids,
           lobbyId,
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${session?.accessToken}`,
           },
         }
       );
@@ -60,10 +66,10 @@ export default function Lobby({ lobby, token, username }: LobbyProps) {
     try {
       const response = await axios.post(
         `${apiUrl}/drop`,
-        { accessToken: token, game: "League of Legends", username, lobbyId },
+        { accessToken: session?.accessToken, game: "League of Legends", username, lobbyId },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${session?.accessToken}`,
           },
         }
       );
@@ -77,7 +83,7 @@ export default function Lobby({ lobby, token, username }: LobbyProps) {
     <div className="bg-amber-50 shadow-[0_0_15px_rgba(255,200,100,0.3),0_0_5px_rgba(255,200,100,0.1)] rounded-lg overflow-hidden my-4 w-80 mx-auto transform hover:scale-103 hover:shadow-[0_0_25px_rgba(255,200,100,0.5),0_0_8px_rgba(255,200,100,0.2)] transition-all duration-300 ease-in-out">
       <div className="bg-amber-800 text-amber-100 p-3 flex-col justify-between items-center">
         <h2 className="text-xl font-bold truncate">{lobby.lobby_name}</h2>
-        <p className="text-xs opacity-75">Host: {lobby.host_id}</p>
+        <p className="text-xs opacity-75">Host: {lobby.host_name}</p>
       </div>
       <div className="p-3">
         <div className="flex justify-between items-center mb-2">
@@ -89,13 +95,13 @@ export default function Lobby({ lobby, token, username }: LobbyProps) {
         <LobbyPlayers lobbyInfo={lobby} onDropSelected={handleDropSelected} />
         <div className="flex justify-between mt-3">
           <button
-            onClick={() => joinLobby(lobby.lobby_id, username)}
+            onClick={() => joinLobby(lobby.lobby_id, session?.user?.name!)}
             className="bg-green-600 hover:bg-green-700 text-amber-100 font-bold py-1 px-3 rounded text-sm transition duration-300 shadow-md hover:shadow-lg"
           >
             Join
           </button>
           <button
-            onClick={() => dropFromLobby(lobby.lobby_id, username)}
+            onClick={() => dropFromLobby(lobby.lobby_id, session?.user?.name!)}
             className="bg-red-600 hover:bg-red-700 text-amber-100 font-bold py-1 px-3 rounded text-sm transition duration-300 shadow-md hover:shadow-lg"
           >
             Drop

@@ -41,20 +41,6 @@ export default function Inhouses() {
     }
   };
 
-  // useEffect(() => {
-  //   if (status === "authenticated" && session.accessToken) {
-  //     console.log("Full Session Object:", JSON.stringify(session, null, 2));
-
-  //     const token = session.accessToken;
-  //     setToken(token);
-  //     let username;
-  //     if (session.user) {
-  //       username = session.user.name!;
-  //       setUsername(username);
-  //     }
-  //   }
-  // }, [session, status]);
-
   useEffect(() => {
     const eventSource = new EventSource(`${apiUrl}/lobbyEvent`);
 
@@ -79,14 +65,14 @@ export default function Inhouses() {
     };
   }, []);
 
+  const canUserHost = canHost(user?.roles ?? {});
+
   if (!session) return <p className="text-slate-100 mx-auto my-40 font-bold text-2xl">Log in with discord to access inhouses</p>
 
-  console.log(user)
-  canHost(user?.roles ?? {});
   return (
     <>
       <div className="flex-col justify-center mx-auto">
-        {canHost(user?.roles ?? {}) ? (
+        {canUserHost ? (
           <button
             className="bg-green-600 hover:bg-green-700 text-amber-100 font-bold py-1 px-3 rounded text-sm transition duration-300 shadow-md hover:shadow-lg"
             onClick={hostLobby}
@@ -101,8 +87,6 @@ export default function Inhouses() {
                 <Lobby
                   key={lobby.lobby_id}
                   lobby={lobbyInfo[index]}
-                  token={session.accessToken!}
-                  username={session.user!.name!}
                 />
               );
             })

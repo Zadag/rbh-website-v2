@@ -20,7 +20,7 @@ const navigation = [
   { name: "FAQ", href: "#", current: false },
   {
     name: "Discord",
-    href: "https://discord.gg/intotherabbithole",
+    href: "https://discord.gg/UfzCNXPC",
     current: false,
   },
 ];
