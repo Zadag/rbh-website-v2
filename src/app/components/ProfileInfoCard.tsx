@@ -15,7 +15,7 @@ const ProfileInfoCard: React.FC<ProfileInfoCardProps> = ({ userProps }) => {
   const { user, roles, permissions } = userProps;
 
   const formatDate = (dateString: string | null): string => {
-    if (!dateString) return "Unavailable"
+    if (!dateString) return "Unavailable";
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
       year: "numeric",
@@ -72,14 +72,16 @@ const ProfileInfoCard: React.FC<ProfileInfoCardProps> = ({ userProps }) => {
         <div className="mt-6">
           <h3 className="text-lg font-semibold mb-2 text-red-300">Roles</h3>
           <div className="flex flex-wrap gap-2">
-            {roles ? Object.entries(roles).map(([role, id]) => (
-              <span
-                key={id}
-                className="bg-red-900 text-white px-2 py-1 rounded-full text-sm"
-              >
-                {role}
-              </span>
-            )) : "uh oh"}
+            {roles
+              ? Object.entries(roles).map(([role, id]) => (
+                  <span
+                    key={id}
+                    className="bg-red-900 text-white px-2 py-1 rounded-full text-sm"
+                  >
+                    {role}
+                  </span>
+                ))
+              : "uh oh"}
           </div>
         </div>
       </div>

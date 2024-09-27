@@ -28,7 +28,7 @@ export default function Inhouses() {
     try {
       const response = await axios.post(
         `${apiUrl}/host`,
-        { accessToken: session?.accessToken, game: "League of Legends", username: session?.user?.name },
+        { accessToken: session?.accessToken, game: "League of Legends" },
         {
           headers: {
             Authorization: `Bearer ${session?.accessToken}`,
@@ -67,7 +67,12 @@ export default function Inhouses() {
 
   const canUserHost = canHost(user?.roles ?? {});
 
-  if (!session) return <p className="text-slate-100 mx-auto my-40 font-bold text-2xl">Log in with discord to access inhouses</p>
+  if (!session)
+    return (
+      <p className="text-slate-100 mx-auto my-40 font-bold text-2xl">
+        Log in with discord to access inhouses
+      </p>
+    );
 
   return (
     <>
@@ -83,12 +88,7 @@ export default function Inhouses() {
         <div className="flex flex-row flex-wrap gap-10">
           {lobbyInfo ? (
             lobbyInfo.map((lobby, index) => {
-              return (
-                <Lobby
-                  key={lobby.lobby_id}
-                  lobby={lobbyInfo[index]}
-                />
-              );
+              return <Lobby key={lobby.lobby_id} lobby={lobbyInfo[index]} />;
             })
           ) : (
             <p>Loading...</p>

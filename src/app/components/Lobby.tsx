@@ -21,12 +21,15 @@ export default function Lobby({ lobby }: LobbyProps) {
   }
   const { user, loading, session } = userCtx;
 
-  const joinLobby = async (lobbyId: number, username: string | null) => {
-
+  const joinLobby = async (lobbyId: number) => {
     try {
       const response = await axios.post(
         `${apiUrl}/join`,
-        { accessToken: session?.accessToken, game: "League of Legends", lobbyId, username: session?.user?.name },
+        {
+          accessToken: session?.accessToken,
+          game: "League of Legends",
+          lobbyId,
+        },
         {
           headers: {
             Authorization: `Bearer ${session?.accessToken}`,
@@ -47,7 +50,6 @@ export default function Lobby({ lobby }: LobbyProps) {
         {
           accessToken: session?.accessToken,
           game: "League of Legends",
-          username: session?.user?.name,
           user_ids,
           lobbyId,
         },
@@ -62,11 +64,15 @@ export default function Lobby({ lobby }: LobbyProps) {
     }
   };
 
-  const dropFromLobby = async (lobbyId: number, username: string | null) => {
+  const dropFromLobby = async (lobbyId: number) => {
     try {
       const response = await axios.post(
         `${apiUrl}/drop`,
-        { accessToken: session?.accessToken, game: "League of Legends", username, lobbyId },
+        {
+          accessToken: session?.accessToken,
+          game: "League of Legends",
+          lobbyId,
+        },
         {
           headers: {
             Authorization: `Bearer ${session?.accessToken}`,
@@ -95,13 +101,13 @@ export default function Lobby({ lobby }: LobbyProps) {
         <LobbyPlayers lobbyInfo={lobby} onDropSelected={handleDropSelected} />
         <div className="flex justify-between mt-3">
           <button
-            onClick={() => joinLobby(lobby.lobby_id, session?.user?.name!)}
+            onClick={() => joinLobby(lobby.lobby_id)}
             className="bg-green-600 hover:bg-green-700 text-amber-100 font-bold py-1 px-3 rounded text-sm transition duration-300 shadow-md hover:shadow-lg"
           >
             Join
           </button>
           <button
-            onClick={() => dropFromLobby(lobby.lobby_id, session?.user?.name!)}
+            onClick={() => dropFromLobby(lobby.lobby_id)}
             className="bg-red-600 hover:bg-red-700 text-amber-100 font-bold py-1 px-3 rounded text-sm transition duration-300 shadow-md hover:shadow-lg"
           >
             Drop

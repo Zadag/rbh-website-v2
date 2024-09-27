@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, {
   createContext,
   useState,
@@ -37,20 +37,17 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
   useEffect(() => {
     if (status === "authenticated" && session?.accessToken) {
-      fetchBackendUserData(session.accessToken, session.user!.name!);
+      fetchBackendUserData(session.accessToken);
     } else if (status !== "loading") {
       setLoading(false);
     }
   }, [session, status]);
 
-  const fetchBackendUserData = async (
-    accessToken: string,
-    username: string
-  ) => {
+  const fetchBackendUserData = async (accessToken: string) => {
     try {
       const response = await axios.post(
         `${apiUrl}/profile`,
-        { accessToken, username },
+        { accessToken },
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
